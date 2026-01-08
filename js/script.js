@@ -2,9 +2,9 @@
 function updateYears() {
     const currentYear = new Date().getFullYear();
     const yearsInBusiness = currentYear - 2007;
-    
+
     // Update all instances of years in business
-    document.getElementById('years-in-business').textContent = yearsInBusiness + '+';
+    document.getElementById('years-in-business').textContent = yearsInBusiness;
     document.getElementById('years-experience').textContent = yearsInBusiness;
     document.getElementById('current-year').textContent = currentYear;
 }
@@ -182,9 +182,56 @@ function initMediaFallbacks() {
     });
 }
 
+// Show tinted version of images on mobile
+function initMobileImages() {
+    // Only run on mobile devices (width <= 768px)
+    if (window.innerWidth > 768) return;
+
+    const serviceImages = document.querySelectorAll('.service-image');
+
+    serviceImages.forEach(img => {
+        const afterImage = img.getAttribute('data-after');
+
+        // Switch to tinted (after) version if it exists
+        if (afterImage) {
+            img.src = afterImage;
+        }
+    });
+}
+
+// Scroll animations for mobile
+function initScrollAnimations() {
+    // Only run on mobile devices (width <= 768px)
+    if (window.innerWidth > 768) return;
+
+    const observerOptions = {
+        threshold: 0.1, // Trigger when 10% visible
+        rootMargin: '0px 0px -50px 0px' // Trigger slightly before entering viewport
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('scroll-visible');
+                // Optional: stop observing after animation
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements that should animate on scroll
+    const elementsToAnimate = document.querySelectorAll(
+        '.service-card, .testimonial-slide, .stat-box'
+    );
+
+    elementsToAnimate.forEach(el => observer.observe(el));
+}
+
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new TestimonialCarousel();
     initServiceImageHover();
     initMediaFallbacks();
+    initMobileImages();
+    initScrollAnimations();
 });
