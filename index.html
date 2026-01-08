@@ -35,9 +35,28 @@
     <link rel="canonical" href="https://pacificwindowtint.com">
     <title>Pacific Window Tint - Expert Tinting in Stockton & Surrounding Areas Since 2007</title>
     <link rel="icon" type="image/png" href="images/pwt_logo.png">
-    <link rel="stylesheet" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css?v=20260107-4">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Replace Syne font with Montserrat to fix descender clipping */
+        .section-title,
+        .service-card h3,
+        .why-text h2,
+        .trust-number,
+        .stat-number,
+        .badge-number,
+        .author-avatar,
+        .footer-brand h3 {
+            font-family: 'Montserrat', sans-serif !important;
+        }
+
+        /* Keep Dancing Script for "Pacific" branding */
+        .logo-pacific-styled,
+        .hero-pacific {
+            font-family: 'Dancing Script', 'Brush Script MT', cursive !important;
+        }
+    </style>
     
     <!-- FAQ Structured Data -->
     <script type="application/ld+json">
@@ -348,7 +367,7 @@
                 </div>
                 <div class="trust-indicators">
                     <div class="trust-item">
-                        <div class="trust-number" id="years-in-business">17+</div>
+                        <div class="trust-number" id="years-in-business">17</div>
                         <div class="trust-label">Years in Business</div>
                     </div>
                     <div class="trust-item">
