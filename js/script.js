@@ -182,49 +182,30 @@ function initMediaFallbacks() {
     });
 }
 
-// Show tinted version of images on mobile
-function initMobileImages() {
+// Simple tap to toggle images on mobile
+function initMobileImageToggle() {
     // Only run on mobile devices (width <= 768px)
     if (window.innerWidth > 768) return;
 
-    const serviceImages = document.querySelectorAll('.service-image');
+    const serviceCards = document.querySelectorAll('.service-card');
 
-    serviceImages.forEach(img => {
+    serviceCards.forEach(card => {
+        const img = card.querySelector('.service-image');
+        if (!img) return;
+
         const afterImage = img.getAttribute('data-after');
+        const beforeImage = img.getAttribute('data-before');
 
-        // Switch to tinted (after) version if it exists
-        if (afterImage) {
-            img.src = afterImage;
+        // Only add toggle if both images exist
+        if (afterImage && beforeImage) {
+            let showingAfter = false;
+
+            card.addEventListener('click', () => {
+                showingAfter = !showingAfter;
+                img.src = showingAfter ? afterImage : beforeImage;
+            });
         }
     });
-}
-
-// Scroll animations for mobile
-function initScrollAnimations() {
-    // Only run on mobile devices (width <= 768px)
-    if (window.innerWidth > 768) return;
-
-    const observerOptions = {
-        threshold: 0.1, // Trigger when 10% visible
-        rootMargin: '0px 0px -50px 0px' // Trigger slightly before entering viewport
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('scroll-visible');
-                // Optional: stop observing after animation
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    // Observe elements that should animate on scroll
-    const elementsToAnimate = document.querySelectorAll(
-        '.service-card, .testimonial-slide, .stat-box'
-    );
-
-    elementsToAnimate.forEach(el => observer.observe(el));
 }
 
 // Initialize when DOM is loaded
@@ -232,6 +213,5 @@ document.addEventListener('DOMContentLoaded', () => {
     new TestimonialCarousel();
     initServiceImageHover();
     initMediaFallbacks();
-    initMobileImages();
-    initScrollAnimations();
+    initMobileImageToggle();
 });
